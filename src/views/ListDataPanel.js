@@ -1,0 +1,66 @@
+import React, {Component} from 'react';
+
+import kind from '@enact/core/kind';
+import {Panel, Header} from '@enact/moonstone/Panels';
+import VideoItem from './components/VideoItem';
+import Button from '@enact/moonstone/Button';
+import Scroller from '@enact/moonstone/Scroller';
+const videos = [
+	{
+		title: 'Sintel',
+		poster: 'http://media.w3.org/2010/05/sintel/poster.png',
+		source: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
+		desc: 'The film follows a girl named Sintel who is searching for a baby dragon she calls Scales. A flashback reveals that Sintel found Scales with its wing injured and helped care for it, forming a close bond with it.'
+	},
+	{
+		title: 'Big Buck Bunny',
+		poster: 'http://media.w3.org/2010/05/bunny/poster.png',
+		source: 'http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_h264.mov',
+		desc: '\'Big\' Buck wakes up in his rabbit hole, only to be pestered by three critters, Gimera, Frank and Rinky. When Gimera kills a butterfly, Buck decides on a payback Predator-style.'
+	},
+	{
+		title: 'VideoTest',
+		poster: 'http://media.w3.org/2010/05/video/poster.png',
+		source: 'http://media.w3.org/2010/05/video/movie_300.mp4',
+		desc: 'A test video with unusual proportions'
+	},
+	{
+		title: 'Bad Video Source',
+		poster: 'http://media.w3.org/2010/05/video/poster.png',
+		// Intentionally invalid video to demonstrate source error state
+		source: 'https://github.com/mderrick/react-html5video',
+		desc: 'Intentionally invalid video to demonstrate source error state'
+	},
+];
+
+class ListDataPanel extends Component {
+	constructor(props){
+		super(props);
+		this.handleNavigate = this.handleNavigate.bind(this);
+	}
+
+	renderVideos = () =>{
+		return videos.map((video, index) => {
+			return <VideoItem {...video}/>
+		});
+	}
+
+	handleNavigate = () =>{
+		this.props.onNavigate({path: '/main'})
+	}
+
+	render() {
+		return (
+			<Panel>
+				<Button onClick={this.handleNavigate}>Go to main</Button>
+				<Scroller direction="horizontal">
+				  <div className='contents' style={{display: 'flex'}}>
+						{this.renderVideos()}
+					</div>
+				</Scroller>
+			</Panel>
+		);
+	}
+}
+
+export default ListDataPanel;
